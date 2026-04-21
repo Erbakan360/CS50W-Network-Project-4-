@@ -1,0 +1,13 @@
+body {
+    margin: 5px;
+}
+
+u {
+    color:#b3b3b3;
+    font-size:12px;
+}
+
+.button {
+    background: transparent; 
+    border: none !important;
+}

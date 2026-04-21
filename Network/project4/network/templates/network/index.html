@@ -1,0 +1,100 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    {% if Error %}
+        <h4> *{{Error}}* </h4>
+    {% endif %}
+
+    {% if USER %}
+    <div style="text-align:center;" >
+        <h2> {{ USER }} </h2>
+        <table class="d-flex justify-content-center">
+            <tr>
+                <td> Following </td>
+                <td> Followers </td>
+            </tr>
+            <tr>
+                <td><b> {{Following|length}} </b></td>
+                <td><b> {{Followers|length}} </b></td>
+            </tr>
+        </table>
+
+        {% if USER.username != user.username %}
+            <div class="Follow">
+                <form action="Follow" method="post">
+                    <input type="hidden" id="id" name="id" value="{{ USER }}">
+                    <input class="btn btn-primary" type="submit" value="{{ fol_msg }}">
+                    {% csrf_token %}
+                </form>
+            </div>
+        {% endif %}
+
+    </div>
+
+    {% else %}
+        <h2> All Posts </h2>
+
+        <div class="New_posts">
+            <form action="New_Post" method="post">
+                <div class="form-group">
+                    <textarea class="form-control" id="Post_body" name="Post_body" placeholder="Share your thoughts with the world!"></textarea>
+                </div>
+                <input class="btn btn-primary" type="submit" value="New post">
+                {% csrf_token %}
+            </form>
+        </div>
+    {% endif %}
+
+    <hr>
+
+    <div class="Posts">
+        {% for Post in Posts%}
+            <form action="Profile" method="post">
+                <h5 id="Post_user"> 
+                    <input type="hidden" id="id" name="id" value="{{Post.user}}">
+                    <input type="submit" class="button" value="{{Post.user}}"> 
+                    <u>{{Post.time}}</u>
+                    {% if Post.Edit %}
+                        <u><b>Edited</b></u>
+                    {% endif %}
+                    {% csrf_token %}
+                </h5>
+            </form>
+            {{Post.content}}<br>
+
+            <table>
+                <tr>
+                    <td>
+                        <form action="Likes" method="post">
+                            <input type="hidden" id="id" name="id" value="{{Post.pk}}">
+                            <input type="submit" class="btn btn-primary" Value="{{Post.like}} &#128077;">
+                            {% csrf_token %}
+                        </form>
+                    </td>
+                    <td>
+                        {% if user.username == Post.user.username%}
+                            <form action="Edit" method="post">
+                                <input type="hidden" id="id" name="id" value="{{Post.pk}}">
+                                <input type="submit" class="button" value="&#9999;">
+                                {% csrf_token %}
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+            <br>
+        {% endfor %}
+    </div>
+    <hr>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination d-flex justify-content-center">
+            {% if Posts.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ Posts.previous_page_number }}"> Previous </a></li>
+            {% endif%}
+            {% if Posts.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ Posts.next_page_number }}"> Next </a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

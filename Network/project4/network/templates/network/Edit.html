@@ -1,0 +1,12 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+<h2 class="View"> {{ user.username }} <h2>
+    <form action="Save_Edit" method="post"> 
+        {% csrf_token %}
+        <textarea hidden id="id" name="id">{{Edit.pk}}</textarea>
+        <textarea class="form-control" id="Edited" name="Edited">{{Edit.content}}</textarea>
+        <input class="btn btn-primary" type="submit" id="Save_edit" name="Save_edit" value="Save edit">
+    </form>
+{% endblock %}
