@@ -8,10 +8,29 @@ Tech: JavaScript, Python, Django, SQL, HTML, CSS.
 
 Requirements: https://cs50.harvard.edu/web/projects/4/network/
 
-# How to run
+ Setup Instructions:
+--------------------------------------------------
+0. Download code/ Clone repository
+   ```
+   git clone https://github.com/Erbakan360/CS50W-Network-Project-4.git
+   ```
+1. Change directory to the wiki
+   ```
+   cd Network
+   ```
 
-In your terminal, cd into the project4 directory.
+2. Install dependencies:
+   ```
+   pip install django markdown2
+   ```
 
-Run python manage.py makemigrations network to make migrations for the network app.
-
-Run python manage.py migrate to apply migrations to your database.
+3. Run database migrations:
+   ```
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+  
+4. Start the development server]
+    ```
+    python manage.py runserver
+    ```
